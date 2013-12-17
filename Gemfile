@@ -50,6 +50,12 @@ group :development, :test do
   gem 'annotate'
 end
 
+group :test do
+  gem 'factory_girl_rails', '4.1.0'
+end
+
+gem 'haml-rails'
+
 gem 'bootstrap-sass', '2.1'
 
 
