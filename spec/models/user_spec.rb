@@ -16,7 +16,7 @@ describe User do
 
   before do
     @user = User.new(name: "Example User", email: "user@example.com",
-                            password: "foobar", password_confirmation: "foobar")
+                            password: "123456", password_confirmation: "123456")
   end
 
   subject { @user }
@@ -128,5 +128,13 @@ describe User do
     before { @user.save }
     its(:remember_token) { should_not be_blank }
   end
+
+  #describe "accessible attributes" do
+  #  it "should not allow access to admin attribute" do
+  #    expect do
+  #      User.new(admin: true)
+  #    end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
+  #  end
+  #end
 
 end

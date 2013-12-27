@@ -31,7 +31,7 @@ describe "Authentication", :type => :feature do
 
     describe "with valid information" do
       let(:user) { FactoryGirl.create(:user) }
-       before { sign_in(user) }
+      before { sign_in(user) }
 
       it { should have_title(user.name) }
       it { should have_link('Users',    href: users_path) }
@@ -43,6 +43,9 @@ describe "Authentication", :type => :feature do
       describe "followed by signout" do
         before { click_link "Sign out" }
         it { should have_link('Sign in') }
+        it { should_not have_link('Profile')}#,  href: user_path(user)) }
+        it { should_not have_link('Settings')}#, href: edit_user_path(user)) }
+
       end
 
     end
@@ -68,6 +71,18 @@ describe "Authentication", :type => :feature do
             page.should have_title('Edit user')
           end
         end
+
+        #describe "when signing in again" do
+        #  before do
+        #    delete signout_path
+        #    sign_in user
+        #  end
+        #
+        #  it "should render the default (profile) page" do
+        #    page.should have_title(user.name)
+        #  end
+        #end
+
       end
 
       describe "in the Users controller" do
@@ -98,7 +113,7 @@ describe "Authentication", :type => :feature do
 
       describe "visiting Users#edit page" do
         before { visit edit_user_path(wrong_user) }
-        it { should_not have_selector('title', text: full_title('Edit user')) }
+        it { should_not have_title(full_title('Edit user')) }
       end
 
       #describe "submitting a PUT request to the Users#update action" do
@@ -107,6 +122,17 @@ describe "Authentication", :type => :feature do
       #end
     end
 
+    describe "for signed-in users" do
+      let(:user) { FactoryGirl.create(:user) }
+      before{ sign_in user}
+      describe "who visit to the 'new user' page" do
+        before{visit new_user_path}
+        it "should redirect to the home page" do
+          page.should_not have_title('Sign up')
+        end
+      end
+
+    end
     describe "as non-admin user" do
       let(:user) { FactoryGirl.create(:user) }
       let(:non_admin) { FactoryGirl.create(:user) }
