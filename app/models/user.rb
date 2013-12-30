@@ -8,13 +8,18 @@
 #  created_at      :datetime
 #  updated_at      :datetime
 #  password_digest :string(255)
+#  remember_token  :string(255)
+#  admin           :boolean          default(FALSE)
 #
 
 require 'bcrypt'
 
+
+
 class User < ActiveRecord::Base
 
   has_secure_password
+  has_many :microposts, dependent: :destroy
 
   before_save { email.downcase! }
   before_save :create_remember_token
@@ -24,6 +29,11 @@ class User < ActiveRecord::Base
   validates :email, presence: true, format: { with: VALID_EMAIL_REGEX, message: "Not allowed email" }, uniqueness: { case_sensitive: false }
   validates :password, length: { minimum: 6 }#, confirmation: true
   validates :password_confirmation, presence: true
+
+  def feed
+    # Это предварительное решение. См. полную реализацию в "Following users".
+    Micropost.where("user_id = ?", id)
+  end
 
   private
 

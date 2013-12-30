@@ -5,5 +5,11 @@
       %h1
         = gravatar_for @user, size: 100
         = "#{@user.name}, #{@user.email}"
-
-
+    %div.span8
+      - if @user.microposts.any?
+        %h3 Microposts
+        =will_paginate @microposts
+        = @user.microposts.count
+        %ol.microposts
+          = render @microposts
+        =will_paginate @microposts

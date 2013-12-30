@@ -1,4 +1,4 @@
-%footer.footer
+%footer.footer.container
   %small
     %a{href: "http://railstutorial.org/"}
       Rails Tutorial
@@ -10,3 +10,4 @@
       %li
         %a{href: "http://news.railstutorial.org/"}
           News
+  = debug(params) if Rails.env.development?
