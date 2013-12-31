@@ -206,7 +206,10 @@ aside {
     margin-bottom: 5px;
   }
 }
-
+#counter {
+  border: 0;
+  background-color: white;
+}
 
 .debug_dump {
   clear: both;

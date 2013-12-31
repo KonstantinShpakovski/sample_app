@@ -1,5 +1,8 @@
 = form_for(@micropost) do |f|
   = render 'shared/error_messages', object: f.object
   %div.field
-    = f.text_area :content, placeholder: "Compose new micropost..."
+    = f.text_area :content, placeholder: "Compose new micropost...", onKeyDown:"textCounter('micropost_content','counter',140);", onKeyUp: "textCounter('micropost_content','counter',140);"
+    %input{ id:"counter", readonly: "true", type:"text", size:"30"}
   = f.submit "Post", class: "btn btn-large btn-primary"
+:javascript
+  textCounter('micropost_content','counter',140);
